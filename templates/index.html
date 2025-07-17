@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="welcome-section mb-4">
+    <h1 class="welcome-title">歡迎使用 NotebookLM <span class="text-primary">Plus</span></h1>
+</div>
+
+<div class="toolbar mb-4">
+    <button type="button" class="btn btn-dark btn-add" data-bs-toggle="modal" data-bs-target="#addTopicModal">
+        <i class="fas fa-plus me-2"></i>新增
+    </button>
+    
+    <div class="view-controls ms-auto">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-secondary active">
+                <i class="fas fa-th"></i>
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+                <i class="fas fa-list"></i>
+            </button>
+        </div>
+        <div class="dropdown ms-2">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                最近修改
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">最近修改</a></li>
+                <li><a class="dropdown-item" href="#">按名稱排序</a></li>
+                <li><a class="dropdown-item" href="#">按建立日期</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="topics-grid">
+    {% for topic in topics %}
+    <div class="topic-card" data-topic-id="{{ topic.id }}">
+        <div class="card-header">
+            <div class="topic-emoji">{{ topic.emoji }}</div>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ url_for('topic_detail', topic_id=topic.id) }}">
+                        <i class="fas fa-eye me-2"></i>檢視
+                    </a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger delete-topic" href="#" data-topic-id="{{ topic.id }}">
+                        <i class="fas fa-trash me-2"></i>刪除
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body" onclick="location.href='{{ url_for('topic_detail', topic_id=topic.id) }}'">
+            <h5 class="card-title">{{ topic.title }}</h5>
+            <p class="card-date">{{ topic.date }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    
+    {% if not topics %}
+    <div class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h3>還沒有任何主題</h3>
+        <p>點擊「新增」按鈕來建立你的第一個主題</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Add Topic Modal -->
+<div class="modal fade" id="addTopicModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">新增主題</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{{ url_for('add_topic') }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">主題標題 <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="emoji" class="form-label">表情符號</label>
+                        <input type="text" class="form-control" id="emoji" name="emoji" placeholder="📝" maxlength="2">
+                        <div class="form-text">選擇一個表情符號來代表這個主題</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">描述</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">新增主題</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteTopicModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">確認刪除</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>您確定要刪除這個主題嗎？此動作無法復原。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">確認刪除</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

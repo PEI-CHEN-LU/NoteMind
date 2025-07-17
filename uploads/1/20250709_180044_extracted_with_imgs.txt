@@ -1,0 +1,721 @@
+
+
+--- Page 1 ---
+[圖片插入點]：img_page_1_1.jpeg
+     A L G O R I T H M S 
+ I N T R O D U C T I O N  T O 
+             T H I R D  E D I T I O N 
+             T H O M A S  H.  
+             C H A R L E S  E.       
+             R O N A L D  L.  
+             C L I F F O R D S T E I N 
+                  R I V E S T 
+                  L E I S E R S O N 
+                  C O R M E N 
+
+
+--- Page 2 ---
+[圖片插入點]：img_page_2_1.png
+     Introduction to Algorithms 
+     Third Edition 
+
+
+--- Page 3 ---
+
+
+--- Page 4 ---
+[圖片插入點]：img_page_4_1.png
+   Thomas H. Cormen 
+   Charles E. Leiserson 
+   Ronald L. Rivest 
+   Clifford Stein 
+     Introduction to Algorithms 
+     Third Edition 
+     The MIT Press 
+     Cambridge, Massachusetts London, England 
+
+
+--- Page 5 ---
+     c   2009 Massachusetts Institute of Technology 
+     All rights reserved. No part of this book may be reproduced in any form or by any electronic or mechanical means 
+     (including photocopying, recording, or information storage and retrieval) without permission in writing from the 
+     publisher. 
+     For information about special quantity discounts, please email special 
+              sales@mitpress.mit.edu. 
+[圖片插入點]：img_page_5_1.png
+     This book was set in Times Roman and Mathtime Pro 2 by the authors. 
+     Printed and bound in the United States of America. 
+     Library of Congress Cataloging-in-Publication Data 
+     Introduction to algorithms / Thomas H. Cormen . . . [et al.].—3rd ed. 
+      p. cm. 
+     Includes bibliographical references and index. 
+     ISBN 978-0-262-03384-8 (hardcover : alk. paper)—ISBN 978-0-262-53305-8 (pbk. : alk. paper) 
+     1. Computer programming. 2. Computer algorithms. I. Cormen, Thomas H. 
+     QA76.6.I5858 2009 
+     005.1—dc22 
+             2009008593 
+     10 9 8 7 6 5 4 3 2 
+
+
+--- Page 6 ---
+   Contents 
+      Preface xiii 
+   I Foundations 
+[圖片插入點]：img_page_6_1.png
+      Introduction 3 
+     1 The Role of Algorithms in Computing 5 
+      1.1 Algorithms 5 
+      1.2 Algorithms as a technology 11 
+     2 Getting Started 16 
+      2.1 Insertion sort 16 
+      2.2 Analyzing algorithms 23 
+      2.3 Designing algorithms 29 
+     3 Growth of Functions 43 
+      3.1 Asymptotic notation 43 
+      3.2 Standard notations and common functions 53 
+     4 Divide-and-Conquer 65 
+      4.1 The maximum-subarray problem 68 
+      4.2 Strassen’s algorithm for matrix multiplication 75 
+      4.3 The substitution method for solving recurrences 83 
+      4.4 The recursion-tree method for solving recurrences 88 
+      4.5 The master method for solving recurrences 93 
+     ? 
+      4.6 Proof of the master theorem 97 
+     5 Probabilistic Analysis and Randomized Algorithms 114 
+      5.1 The hiring problem 114 
+      5.2 Indicator random variables 118 
+      5.3 Randomized algorithms 122 
+     ? 
+      5.4 Probabilistic analysis and further uses of indicator random variables 
+       130 
+
+
+--- Page 7 ---
+  vi Contents 
+  II Sorting and Order Statistics 
+[圖片插入點]：img_page_7_1.png
+      Introduction 147 
+     6 Heapsort 151 
+      6.1 Heaps 151 
+      6.2 Maintaining the heap property 154 
+      6.3 Building a heap 156 
+      6.4 The heapsort algorithm 159 
+      6.5 Priority queues 162 
+     7 Quicksort 170 
+      7.1 Description of quicksort 170 
+      7.2 Performance of quicksort 174 
+      7.3 A randomized version of quicksort 179 
+      7.4 Analysis of quicksort 180 
+     8 Sorting in Linear Time 191 
+      8.1 Lower bounds for sorting 191 
+      8.2 Counting sort 194 
+      8.3 Radix sort 197 
+      8.4 Bucket sort 200 
+     9 Medians and Order Statistics 213 
+      9.1 Minimum and maximum 214 
+      9.2 Selection in expected linear time 215 
+      9.3 Selection in worst-case linear time 220 
+  III Data Structures 
+      Introduction 229 
+     10 Elementary Data Structures 232 
+      10.1 Stacks and queues 232 
+      10.2 Linked lists 236 
+      10.3 Implementing pointers and objects 241 
+      10.4 Representing rooted trees 246 
+     11 Hash Tables 253 
+      11.1 Direct-address tables 254 
+      11.2 Hash tables 256 
+      11.3 Hash functions 262 
+      11.4 Open addressing 269 
+     ? 
+      11.5 Perfect hashing 277 
+
+
+--- Page 8 ---
+     Contents vii 
+     12 Binary Search Trees 286 
+      12.1 What is a binary search tree? 286 
+      12.2 Querying a binary search tree 289 
+      12.3 Insertion and deletion 294 
+     ? 
+      12.4 Randomly built binary search trees 299 
+     13 Red-Black Trees 308 
+      13.1 Properties of red-black trees 308 
+      13.2 Rotations 312 
+      13.3 Insertion 315 
+      13.4 Deletion 323 
+     14 Augmenting Data Structures 339 
+      14.1 Dynamic order statistics 339 
+      14.2 How to augment a data structure 345 
+      14.3 Interval trees 348 
+   IV Advanced Design and Analysis Techniques 
+[圖片插入點]：img_page_8_1.png
+      Introduction 357 
+     15 Dynamic Programming 359 
+      15.1 Rod cutting 360 
+      15.2 Matrix-chain multiplication 370 
+      15.3 Elements of dynamic programming 378 
+      15.4 Longest common subsequence 390 
+      15.5 Optimal binary search trees 397 
+     16 Greedy Algorithms 414 
+      16.1 An activity-selection problem 415 
+      16.2 Elements of the greedy strategy 423 
+      16.3 Huffman codes 428 
+     ? 
+      16.4 Matroids and greedy methods 437 
+     ? 
+      16.5 A task-scheduling problem as a matroid 443 
+     17 Amortized Analysis 451 
+      17.1 Aggregate analysis 452 
+      17.2 The accounting method 456 
+      17.3 The potential method 459 
+      17.4 Dynamic tables 463 
+
+
+--- Page 9 ---
+  viii Contents 
+  V Advanced Data Structures 
+[圖片插入點]：img_page_9_1.png
+      Introduction 481 
+     18 B-Trees 484 
+      18.1 Deﬁnition of B-trees 488 
+      18.2 Basic operations on B-trees 491 
+      18.3 Deleting a key from a B-tree 499 
+     19 Fibonacci Heaps 505 
+      19.1 Structure of Fibonacci heaps 507 
+      19.2 Mergeable-heap operations 510 
+      19.3 Decreasing a key and deleting a node 518 
+      19.4 Bounding the maximum degree 523 
+     20 van Emde Boas Trees 531 
+      20.1 Preliminary approaches 532 
+      20.2 A recursive structure 536 
+      20.3 The van Emde Boas tree 545 
+     21 Data Structures for Disjoint Sets 561 
+      21.1 Disjoint-set operations 561 
+      21.2 Linked-list representation of disjoint sets 564 
+      21.3 Disjoint-set forests 568 
+     ? 
+      21.4 Analysis of union by rank with path compression 573 
+  VI Graph Algorithms 
+      Introduction 587 
+     22 Elementary Graph Algorithms 589 
+      22.1 Representations of graphs 589 
+      22.2 Breadth-ﬁrst search 594 
+      22.3 Depth-ﬁrst search 603 
+      22.4 Topological sort 612 
+      22.5 Strongly connected components 615 
+     23 Minimum Spanning Trees 624 
+      23.1 Growing a minimum spanning tree 625 
+      23.2 The algorithms of Kruskal and Prim 631 
+
+
+--- Page 10 ---
+     Contents ix 
+     24 Single-Source Shortest Paths 643 
+      24.1 The Bellman-Ford algorithm 651 
+      24.2 Single-source shortest paths in directed acyclic graphs 655 
+      24.3 Dijkstra’s algorithm 658 
+      24.4 Difference constraints and shortest paths 664 
+      24.5 Proofs of shortest-paths properties 671 
+     25 All-Pairs Shortest Paths 684 
+      25.1 Shortest paths and matrix multiplication 686 
+      25.2 The Floyd-Warshall algorithm 693 
+      25.3 Johnson’s algorithm for sparse graphs 700 
+     26 Maximum Flow 708 
+      26.1 Flow networks 709 
+      26.2 The Ford-Fulkerson method 714 
+      26.3 Maximum bipartite matching 732 
+     ? 
+      26.4 Push-relabel algorithms 736 
+     ? 
+      26.5 The relabel-to-front algorithm 748 
+   VII Selected Topics 
+[圖片插入點]：img_page_10_1.png
+      Introduction 769 
+     27 Multithreaded Algorithms 772 
+      27.1 The basics of dynamic multithreading 774 
+      27.2 Multithreaded matrix multiplication 792 
+      27.3 Multithreaded merge sort 797 
+     28 Matrix Operations 813 
+      28.1 Solving systems of linear equations 813 
+      28.2 Inverting matrices 827 
+      28.3 Symmetric positive-deﬁnite matrices and least-squares approximation 
+       832 
+     29 Linear Programming 843 
+      29.1 Standard and slack forms 850 
+      29.2 Formulating problems as linear programs 859 
+      29.3 The simplex algorithm 864 
+      29.4 Duality 879 
+      29.5 The initial basic feasible solution 886 
+
+
+--- Page 11 ---
+  x Contents 
+     30 Polynomials and the FFT 898 
+      30.1 Representing polynomials 900 
+      30.2 The DFT and FFT 906 
+      30.3 Efﬁcient FFT implementations 915 
+     31 Number-Theoretic Algorithms 926 
+      31.1 Elementary number-theoretic notions 927 
+      31.2 Greatest common divisor 933 
+      31.3 Modular arithmetic 939 
+      31.4 Solving modular linear equations 946 
+      31.5 The Chinese remainder theorem 950 
+      31.6 Powers of an element 954 
+      31.7 The RSA public-key cryptosystem 958 
+     ? 
+      31.8 Primality testing 965 
+     ? 
+      31.9 Integer factorization 975 
+     32 String Matching 985 
+      32.1 The naive string-matching algorithm 988 
+      32.2 The Rabin-Karp algorithm 990 
+      32.3 String matching with ﬁnite automata 995 
+     ? 
+      32.4 The Knuth-Morris-Pratt algorithm 1002 
+     33 Computational Geometry 1014 
+      33.1 Line-segment properties 1015 
+      33.2 Determining whether any pair of segments intersects 1021 
+      33.3 Finding the convex hull 1029 
+      33.4 Finding the closest pair of points 1039 
+     34 NP-Completeness 1048 
+      34.1 Polynomial time 1053 
+      34.2 Polynomial-time veriﬁcation 1061 
+      34.3 NP-completeness and reducibility 1067 
+      34.4 NP-completeness proofs 1078 
+      34.5 NP-complete problems 1086 
+     35 Approximation Algorithms 1106 
+      35.1 The vertex-cover problem 1108 
+      35.2 The traveling-salesman problem 1111 
+      35.3 The set-covering problem 1117 
+      35.4 Randomization and linear programming 1123 
+      35.5 The subset-sum problem 1128 
+
+
+--- Page 12 ---
+     Contents xi 
+   VIII Appendix: Mathematical Background 
+[圖片插入點]：img_page_12_1.png
+      Introduction 1143 
+     A Summations 1145 
+      A.1 Summation formulas and properties 1145 
+      A.2 Bounding summations 1149 
+     B Sets, Etc. 1158 
+      B.1 Sets 1158 
+      B.2 Relations 1163 
+      B.3 Functions 1166 
+      B.4 Graphs 1168 
+      B.5 Trees 1173 
+     C Counting and Probability 1183 
+      C.1 Counting 1183 
+      C.2 Probability 1189 
+      C.3 Discrete random variables 1196 
+      C.4 The geometric and binomial distributions 1201 
+     ? 
+      C.5 The tails of the binomial distribution 1208 
+     D Matrices 1217 
+      D.1 Matrices and matrix operations 1217 
+      D.2 Basic matrix properties 1222 
+      Bibliography 1231 
+      Index 1251 
+
+
+--- Page 13 ---
+
+
+--- Page 14 ---
+   Preface 
+     Before there were computers, there were algorithms. But now that there are com- 
+     puters, there are even more algorithms, and algorithms lie at the heart of computing. 
+      This book provides a comprehensive introduction to the modern study of com- 
+     puter algorithms. It presents many algorithms and covers them in considerable 
+     depth, yet makes their design and analysis accessible to all levels of readers. We 
+     have tried to keep explanations elementary without sacriﬁcing depth of coverage 
+     or mathematical rigor. 
+      Each chapter presents an algorithm, a design technique, an application area, or a 
+     related topic. Algorithms are described in English and in a pseudocode designed to 
+     be readable by anyone who has done a little programming. The book contains 244 
+     ﬁgures—many with multiple parts—illustrating how the algorithms work. Since 
+     we emphasize  efﬁciency  as a design criterion, we include careful analyses of the 
+     running times of all our algorithms. 
+      The text is intended primarily for use in undergraduate or graduate courses in 
+     algorithms or data structures. Because it discusses engineering issues in algorithm 
+     design, as well as mathematical aspects, it is equally well suited for self-study by 
+     technical professionals. 
+      In this, the third edition, we have once again updated the entire book. The 
+     changes cover a broad spectrum, including new chapters, revised pseudocode, and 
+     a more active writing style. 
+     To the teacher 
+     We have designed this book to be both versatile and complete. You should ﬁnd it 
+     useful for a variety of courses, from an undergraduate course in data structures up 
+     through a graduate course in algorithms. Because we have provided considerably 
+     more material than can ﬁt in a typical one-term course, you can consider this book 
+     to be a “buffet” or “smorgasbord” from which you can pick and choose the material 
+     that best supports the course you wish to teach. 
+
+
+--- Page 15 ---
+  xiv Preface 
+      You should ﬁnd it easy to organize your course around just the chapters you 
+     need. We have made chapters relatively self-contained, so that you need not worry 
+     about an unexpected and unnecessary dependence of one chapter on another. Each 
+     chapter presents the easier material ﬁrst and the more difﬁcult material later, with 
+     section boundaries marking natural stopping points. In an undergraduate course, 
+     you might use only the earlier sections from a chapter; in a graduate course, you 
+     might cover the entire chapter. 
+      We have included 957 exercises and 158 problems. Each section ends with exer- 
+     cises, and each chapter ends with problems. The exercises are generally short ques- 
+     tions that test basic mastery of the material. Some are simple self-check thought 
+     exercises, whereas others are more substantial and are suitable as assigned home- 
+     work. The problems are more elaborate case studies that often introduce new ma- 
+     terial; they often consist of several questions that lead the student through the steps 
+     required to arrive at a solution. 
+      Departing from our practice in previous editions of this book, we have made 
+     publicly available solutions to some, but by no means all, of the problems and ex- 
+     ercises. Our Web site, http://mitpress.mit.edu/algorithms/, links to these solutions. 
+     You will want to check this site to make sure that it does not contain the solution to 
+     an exercise or problem that you plan to assign. We expect the set of solutions that 
+     we post to grow slowly over time, so you will need to check it each time you teach 
+     the course. 
+      We have starred ( ? ) the sections and exercises that are more suitable for graduate 
+     students than for undergraduates. A starred section is not necessarily more difﬁ- 
+     cult than an unstarred one, but it may require an understanding of more advanced 
+     mathematics. Likewise, starred exercises may require an advanced background or 
+     more than average creativity. 
+     To the student 
+     We hope that this textbook provides you with an enjoyable introduction to the 
+     ﬁeld of algorithms. We have attempted to make every algorithm accessible and 
+     interesting. To help you when you encounter unfamiliar or difﬁcult algorithms, we 
+     describe each one in a step-by-step manner. We also provide careful explanations 
+     of the mathematics needed to understand the analysis of the algorithms. If you 
+     already have some familiarity with a topic, you will ﬁnd the chapters organized so 
+     that you can skim introductory sections and proceed quickly to the more advanced 
+     material. 
+      This is a large book, and your class will probably cover only a portion of its 
+     material. We have tried, however, to make this a book that will be useful to you 
+     now as a course textbook and also later in your career as a mathematical desk 
+     reference or an engineering handbook. 
+
+
+--- Page 16 ---
+     Preface xv 
+      What are the prerequisites for reading this book? 
+      
+      You should have some programming experience. In particular, you should un- 
+      derstand recursive procedures and simple data structures such as arrays and 
+      linked lists. 
+      
+      You should have some facility with mathematical proofs, and especially proofs 
+      by mathematical induction. A few portions of the book rely on some knowledge 
+      of elementary calculus. Beyond that, Parts I and VIII of this book teach you all 
+      the mathematical techniques you will need. 
+      We have heard, loud and clear, the call to supply solutions to problems and 
+     exercises. Our Web site, http://mitpress.mit.edu/algorithms/, links to solutions for 
+     a few of the problems and exercises. Feel free to check your solutions against ours. 
+     We ask, however, that you do not send your solutions to us. 
+     To the professional 
+     The wide range of topics in this book makes it an excellent handbook on algo- 
+     rithms. Because each chapter is relatively self-contained, you can focus in on the 
+     topics that most interest you. 
+      Most of the algorithms we discuss have great practical utility. We therefore 
+     address implementation concerns and other engineering issues. We often provide 
+     practical alternatives to the few algorithms that are primarily of theoretical interest. 
+      If you wish to implement any of the algorithms, you should ﬁnd the transla- 
+     tion of our pseudocode into your favorite programming language to be a fairly 
+     straightforward task. We have designed the pseudocode to present each algorithm 
+     clearly and succinctly. Consequently, we do not address error-handling and other 
+     software-engineering issues that require speciﬁc assumptions about your program- 
+     ming environment. We attempt to present each algorithm simply and directly with- 
+     out allowing the idiosyncrasies of a particular programming language to obscure 
+     its essence. 
+      We understand that if you are using this book outside of a course, then you 
+     might be unable to check your solutions to problems and exercises against solutions 
+     provided by an instructor. Our Web site, http://mitpress.mit.edu/algorithms/, links 
+     to solutions for some of the problems and exercises so that you can check your 
+     work. Please do not send your solutions to us. 
+     To our colleagues 
+     We have supplied an extensive bibliography and pointers to the current literature. 
+     Each chapter ends with a set of chapter notes that give historical details and ref- 
+     erences. The chapter notes do not provide a complete reference to the whole ﬁeld 
+
+
+--- Page 17 ---
+  xvi Preface 
+     of algorithms, however. Though it may be hard to believe for a book of this size, 
+     space constraints prevented us from including many interesting algorithms. 
+      Despite myriad requests from students for solutions to problems and exercises, 
+     we have chosen as a matter of policy not to supply references for problems and 
+     exercises, to remove the temptation for students to look up a solution rather than to 
+     ﬁnd it themselves. 
+     Changes for the third edition 
+     What has changed between the second and third editions of this book? The mag- 
+     nitude of the changes is on a par with the changes between the ﬁrst and second 
+     editions. As we said about the second-edition changes, depending on how you 
+     look at it, the book changed either not much or quite a bit. 
+      A quick look at the table of contents shows that most of the second-edition chap- 
+     ters and sections appear in the third edition. We removed two chapters and one 
+     section, but we have added three new chapters and two new sections apart from 
+     these new chapters. 
+      We kept the hybrid organization from the ﬁrst two editions. Rather than organiz- 
+     ing chapters by only problem domains or according only to techniques, this book 
+     has elements of both. It contains technique-based chapters on divide-and-conquer, 
+     dynamic programming, greedy algorithms, amortized analysis, NP-Completeness, 
+     and approximation algorithms. But it also has entire parts on sorting, on data 
+     structures for dynamic sets, and on algorithms for graph problems. We ﬁnd that 
+     although you need to know how to apply techniques for designing and analyzing al- 
+     gorithms, problems seldom announce to you which techniques are most amenable 
+     to solving them. 
+      Here is a summary of the most signiﬁcant changes for the third edition: 
+      
+      We added new chapters on van Emde Boas trees and multithreaded algorithms, 
+      and we have broken out material on matrix basics into its own appendix chapter. 
+      
+      We revised the chapter on recurrences to more broadly cover the divide-and- 
+      conquer technique, and its ﬁrst two sections apply divide-and-conquer to solve 
+      two problems. The second section of this chapter presents Strassen’s algorithm 
+      for matrix multiplication, which we have moved from the chapter on matrix 
+      operations. 
+      
+      We removed two chapters that were rarely taught: binomial heaps and sorting 
+      networks. One key idea in the sorting networks chapter, the 0-1 principle, ap- 
+      pears in this edition within Problem 8-7 as the 0-1 sorting lemma for compare- 
+      exchange algorithms. The treatment of Fibonacci heaps no longer relies on 
+      binomial heaps as a precursor. 
+
+
+--- Page 18 ---
+     Preface xvii 
+      
+      We revised our treatment of dynamic programming and greedy algorithms. Dy- 
+      namic programming now leads off with a more interesting problem, rod cutting, 
+      than the assembly-line scheduling problem from the second edition. Further- 
+      more, we emphasize memoization a bit more than we did in the second edition, 
+      and we introduce the notion of the subproblem graph as a way to understand 
+      the running time of a dynamic-programming algorithm. In our opening exam- 
+      ple of greedy algorithms, the activity-selection problem, we get to the greedy 
+      algorithm more directly than we did in the second edition. 
+      
+      The way we delete a node from binary search trees (which includes red-black 
+      trees) now guarantees that the node requested for deletion is the node that is 
+      actually deleted. In the ﬁrst two editions, in certain cases, some other node 
+      would be deleted, with its contents moving into the node passed to the deletion 
+      procedure. With our new way to delete nodes, if other components of a program 
+      maintain pointers to nodes in the tree, they will not mistakenly end up with stale 
+      pointers to nodes that have been deleted. 
+      
+      The material on ﬂow networks now bases ﬂows entirely on edges. This ap- 
+      proach is more intuitive than the net ﬂow used in the ﬁrst two editions. 
+      
+      With the material on matrix basics and Strassen’s algorithm moved to other 
+      chapters, the chapter on matrix operations is smaller than in the second edition. 
+      
+      We have modiﬁed our treatment of the Knuth-Morris-Pratt string-matching al- 
+      gorithm. 
+      
+      We corrected several errors. Most of these errors were posted on our Web site 
+      of second-edition errata, but a few were not. 
+      
+      Based on many requests, we changed the syntax (as it were) of our pseudocode. 
+      We now use “ D ” to indicate assignment and “ == ” to test for equality, just as C, 
+      C++, Java, and Python do. Likewise, we have eliminated the keywords  do  and 
+      then  and adopted “ // ” as our comment-to-end-of-line symbol. We also now use 
+      dot-notation to indicate object attributes. Our pseudocode remains procedural, 
+      rather than object-oriented. In other words, rather than running methods on 
+      objects, we simply call procedures, passing objects as parameters. 
+      
+      We added 100 new exercises and 28 new problems. We also updated many 
+      bibliography entries and added several new ones. 
+      
+      Finally, we went through the entire book and rewrote sentences, paragraphs, 
+      and sections to make the writing clearer and more active. 
+
+
+--- Page 19 ---
+  xviii Preface 
+     Web site 
+     You can use our Web site, http://mitpress.mit.edu/algorithms/, to obtain supple- 
+     mentary information and to communicate with us. The Web site links to a list of 
+     known errors, solutions to selected exercises and problems, and (of course) a list 
+     explaining the corny professor jokes, as well as other content that we might add. 
+     The Web site also tells you how to report errors or make suggestions. 
+     How we produced this book 
+     Like the second edition, the third edition was produced in L A TEX 2 " . We used the 
+     Times font with mathematics typeset using the MathTime Pro 2 fonts. We thank 
+     Michael Spivak from Publish or Perish, Inc., Lance Carnes from Personal TeX, 
+     Inc., and Tim Tregubov from Dartmouth College for technical support. As in the 
+     previous two editions, we compiled the index using Windex, a C program that we 
+     wrote, and the bibliography was produced with B IB TEX. The PDF ﬁles for this 
+     book were created on a MacBook running OS 10.5. 
+      We drew the illustrations for the third edition using MacDraw Pro, with some 
+     of the mathematical expressions in illustrations laid in with the psfrag package 
+     for L A TEX 2 " . Unfortunately, MacDraw Pro is legacy software, having not been 
+     marketed for over a decade now. Happily, we still have a couple of Macintoshes 
+     that can run the Classic environment under OS 10.4, and hence they can run Mac- 
+     Draw Pro—mostly. Even under the Classic environment, we ﬁnd MacDraw Pro to 
+     be far easier to use than any other drawing software for the types of illustrations 
+     that accompany computer-science text, and it produces beautiful output. 1   Who 
+     knows how long our pre-Intel Macs will continue to run, so if anyone from Apple 
+     is listening:  Please create an OS X-compatible version of MacDraw Pro! 
+     Acknowledgments for the third edition 
+     We have been working with the MIT Press for over two decades now, and what a 
+     terriﬁc relationship it has been! We thank Ellen Faran, Bob Prior, Ada Brunstein, 
+     and Mary Reilly for their help and support. 
+      We were geographically distributed while producing the third edition, working 
+     in the Dartmouth College Department of Computer Science, the MIT Computer 
+[圖片插入點]：img_page_19_1.png
+     1 We investigated several drawing programs that run under Mac OS X, but all had signiﬁcant short- 
+     comings compared with MacDraw Pro. We brieﬂy attempted to produce the illustrations for this 
+     book with a different, well known drawing program. We found that it took at least ﬁve times as long 
+     to produce each illustration as it took with MacDraw Pro, and the resulting illustrations did not look 
+     as good. Hence the decision to revert to MacDraw Pro running on older Macintoshes. 
+
+
+--- Page 20 ---
+     Preface xix 
+     Science and Artiﬁcial Intelligence Laboratory, and the Columbia University De- 
+     partment of Industrial Engineering and Operations Research. We thank our re- 
+     spective universities and colleagues for providing such supportive and stimulating 
+     environments. 
+      Julie Sussman, P.P.A., once again bailed us out as the technical copyeditor. Time 
+     and again, we were amazed at the errors that eluded us, but that Julie caught. She 
+     also helped us improve our presentation in several places. If there is a Hall of Fame 
+     for technical copyeditors, Julie is a sure-ﬁre, ﬁrst-ballot inductee. She is nothing 
+     short of phenomenal. Thank you, thank you, thank you, Julie! Priya Natarajan also 
+     found some errors that we were able to correct before this book went to press. Any 
+     errors that remain (and undoubtedly, some do) are the responsibility of the authors 
+     (and probably were inserted after Julie read the material). 
+      The treatment for van Emde Boas trees derives from Erik Demaine’s notes, 
+     which were in turn inﬂuenced by Michael Bender. We also incorporated ideas 
+     from Javed Aslam, Bradley Kuszmaul, and Hui Zha into this edition. 
+      The chapter on multithreading was based on notes originally written jointly with 
+     Harald Prokop. The material was inﬂuenced by several others working on the Cilk 
+     project at MIT, including Bradley Kuszmaul and Matteo Frigo. The design of the 
+     multithreaded pseudocode took its inspiration from the MIT Cilk extensions to C 
+     and by Cilk Arts’s Cilk++ extensions to C++. 
+      We also thank the many readers of the ﬁrst and second editions who reported 
+     errors or submitted suggestions for how to improve this book. We corrected all the 
+     bona ﬁde errors that were reported, and we incorporated as many suggestions as 
+     we could. We rejoice that the number of such contributors has grown so great that 
+     we must regret that it has become impractical to list them all. 
+      Finally, we thank our wives—Nicole Cormen, Wendy Leiserson, Gail Rivest, 
+     and Rebecca Ivry—and our children—Ricky, Will, Debby, and Katie Leiserson; 
+     Alex and Christopher Rivest; and Molly, Noah, and Benjamin Stein—for their love 
+     and support while we prepared this book. The patience and encouragement of our 
+     families made this project possible. We affectionately dedicate this book to them. 
+     T HOMAS  H. C ORMEN Lebanon, New Hampshire 
+     C HARLES  E. L EISERSON Cambridge, Massachusetts 
+     R ONALD  L. R IVEST Cambridge, Massachusetts 
+     C LIFFORD  S TEIN New York, New York 
+     February 2009 
+
+
+--- Page 21 ---
+
+
+--- Page 22 ---
+[圖片插入點]：img_page_22_1.png
+     Introduction to Algorithms 
+     Third Edition 
+
+
+--- Page 23 ---
+[圖片插入點]：img_page_23_1.png
+  I Foundations 
+
+
+--- Page 24 ---
+   Introduction 
+[圖片插入點]：img_page_24_1.png
+     This part will start you thinking about designing and analyzing algorithms. It is 
+     intended to be a gentle introduction to how we specify algorithms, some of the 
+     design strategies we will use throughout this book, and many of the fundamental 
+     ideas used in algorithm analysis. Later parts of this book will build upon this base. 
+      Chapter 1 provides an overview of algorithms and their place in modern com- 
+     puting systems. This chapter deﬁnes what an algorithm is and lists some examples. 
+     It also makes a case that we should consider algorithms as a technology, along- 
+     side technologies such as fast hardware, graphical user interfaces, object-oriented 
+     systems, and networks. 
+      In Chapter 2, we see our ﬁrst algorithms, which solve the problem of sorting 
+     a sequence of  n  numbers. They are written in a pseudocode which, although not 
+     directly translatable to any conventional programming language, conveys the struc- 
+     ture of the algorithm clearly enough that you should be able to implement it in the 
+     language of your choice. The sorting algorithms we examine are insertion sort, 
+     which uses an incremental approach, and merge sort, which uses a recursive tech- 
+     nique known as “divide-and-conquer.” Although the time each requires increases 
+     with the value of  n , the rate of increase differs between the two algorithms. We 
+     determine these running times in Chapter 2, and we develop a useful notation to 
+     express them. 
+      Chapter 3 precisely deﬁnes this notation, which we call asymptotic notation. It 
+     starts by deﬁning several asymptotic notations, which we use for bounding algo- 
+     rithm running times from above and/or below. The rest of Chapter 3 is primarily 
+     a presentation of mathematical notation, more to ensure that your use of notation 
+     matches that in this book than to teach you new mathematical concepts. 
+
+
+--- Page 25 ---
+  4 Part I Foundations 
+      Chapter 4 delves further into the divide-and-conquer method introduced in 
+     Chapter 2. It provides additional examples of divide-and-conquer algorithms, in- 
+     cluding Strassen’s surprising method for multiplying two square matrices. Chap- 
+     ter 4 contains methods for solving recurrences, which are useful for describing 
+     the running times of recursive algorithms. One powerful technique is the “mas- 
+     ter method,” which we often use to solve recurrences that arise from divide-and- 
+     conquer algorithms. Although much of Chapter 4 is devoted to proving the cor- 
+     rectness of the master method, you may skip this proof yet still employ the master 
+     method. 
+      Chapter 5 introduces probabilistic analysis and randomized algorithms. We typ- 
+     ically use probabilistic analysis to determine the running time of an algorithm in 
+     cases in which, due to the presence of an inherent probability distribution, the 
+     running time may differ on different inputs of the same size. In some cases, we 
+     assume that the inputs conform to a known probability distribution, so that we are 
+     averaging the running time over all possible inputs. In other cases, the probability 
+     distribution comes not from the inputs but from random choices made during the 
+     course of the algorithm. An algorithm whose behavior is determined not only by its 
+     input but by the values produced by a random-number generator is a randomized 
+     algorithm. We can use randomized algorithms to enforce a probability distribution 
+     on the inputs—thereby ensuring that no particular input always causes poor perfor- 
+     mance—or even to bound the error rate of algorithms that are allowed to produce 
+     incorrect results on a limited basis. 
+      Appendices A–D contain other mathematical material that you will ﬁnd helpful 
+     as you read this book. You are likely to have seen much of the material in the 
+     appendix chapters before having read this book (although the speciﬁc deﬁnitions 
+     and notational conventions we use may differ in some cases from what you have 
+     seen in the past), and so you should think of the Appendices as reference material. 
+     On the other hand, you probably have not already seen most of the material in 
+     Part I. All the chapters in Part I and the Appendices are written with a tutorial 
+     ﬂavor. 
+
+
+--- Page 26 ---
+[圖片插入點]：img_page_26_1.png
+   1 The Role of Algorithms in Computing 
+     What are algorithms? Why is the study of algorithms worthwhile? What is the role 
+     of algorithms relative to other technologies used in computers? In this chapter, we 
+     will answer these questions. 
+   1.1 Algorithms 
+     Informally, an  algorithm  is any well-deﬁned computational procedure that takes 
+     some value, or set of values, as  input  and produces some value, or set of values, as 
+     output . An algorithm is thus a sequence of computational steps that transform the 
+     input into the output. 
+      We can also view an algorithm as a tool for solving a well-speciﬁed  computa- 
+     tional problem . The statement of the problem speciﬁes in general terms the desired 
+     input/output relationship. The algorithm describes a speciﬁc computational proce- 
+     dure for achieving that input/output relationship. 
+      For example, we might need to sort a sequence of numbers into nondecreasing 
+     order. This problem arises frequently in practice and provides fertile ground for 
+     introducing many standard design techniques and analysis tools. Here is how we 
+     formally deﬁne the  sorting problem : 
+     Input:  A sequence of  n  numbers  h a 1 ; a 2 ; : : : ; a n i . 
+     Output:  A permutation (reordering)  h a 0 
+             1 ; a 0 2 ; : : : ; a 0 
+               n i  of the input sequence such 
+      that  a 0 
+       1     a 0 2         a 0 
+          n . 
+     For example, given the input sequence  h 31; 41; 59; 26; 41; 58 i , a sorting algorithm 
+     returns as output the sequence  h 26; 31; 41; 41; 58; 59 i . Such an input sequence is 
+     called an  instance  of the sorting problem. In general, an  instance of a problem 
+     consists of the input (satisfying whatever constraints are imposed in the problem 
+     statement) needed to compute a solution to the problem. 
+
+

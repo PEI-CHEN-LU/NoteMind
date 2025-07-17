@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊 - NotebookLM Plus</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header text-center mb-4">
+                <div class="logo-container mb-3">
+                    <span class="logo-icon">🧠</span>
+                    <span class="logo-text">NotebookLM</span>
+                    <span class="logo-plus">Plus</span>
+                </div>
+                <h2 class="auth-title">建立新帳戶</h2>
+                <p class="auth-subtitle text-muted">開始您的智慧筆記之旅</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" class="auth-form" id="registerForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">使用者名稱</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <input type="text" class="form-control" id="username" name="username" required 
+                               placeholder="請輸入使用者名稱" value="{{ request.form.username or '' }}">
+                    </div>
+                    <div class="form-text">使用者名稱將作為您的登入帳號</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">電子郵件</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <input type="email" class="form-control" id="email" name="email" required 
+                               placeholder="請輸入電子郵件" value="{{ request.form.email or '' }}">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">密碼</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" class="form-control" id="password" name="password" required 
+                               placeholder="請輸入密碼" minlength="6">
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password', 'password-icon')">
+                            <i class="fas fa-eye" id="password-icon"></i>
+                        </button>
+                    </div>
+                    <div class="form-text">密碼長度至少需要6個字元</div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="confirm_password" class="form-label">確認密碼</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required 
+                               placeholder="請再次輸入密碼" minlength="6">
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirm_password', 'confirm-password-icon')">
+                            <i class="fas fa-eye" id="confirm-password-icon"></i>
+                        </button>
+                    </div>
+                    <div id="password-match-message" class="form-text"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-3" id="registerBtn">
+                    <i class="fas fa-user-plus me-2"></i>註冊
+                </button>
+            </form>
+
+            <div class="auth-footer text-center">
+                <p class="mb-0">已經有帳戶了？
+                    <a href="{{ url_for('login') }}" class="auth-link">立即登入</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function togglePassword(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const passwordIcon = document.getElementById(iconId);
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Password confirmation validation
+        document.getElementById('confirm_password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            const messageDiv = document.getElementById('password-match-message');
+            const registerBtn = document.getElementById('registerBtn');
+            
+            if (confirmPassword) {
+                if (password === confirmPassword) {
+                    messageDiv.innerHTML = '<span class="text-success"><i class="fas fa-check me-1"></i>密碼符合</span>';
+                    registerBtn.disabled = false;
+                } else {
+                    messageDiv.innerHTML = '<span class="text-danger"><i class="fas fa-times me-1"></i>密碼不符</span>';
+                    registerBtn.disabled = true;
+                }
+            } else {
+                messageDiv.innerHTML = '';
+                registerBtn.disabled = false;
+            }
+        });
+
+        // Form validation
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirm_password').value.trim();
+            
+            if (!username || !email || !password || !confirmPassword) {
+                e.preventDefault();
+                alert('請填寫所有欄位');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('密碼確認不符');
+                return;
+            }
+            
+            if (password.length < 6) {
+                e.preventDefault();
+                alert('密碼長度至少需要6個字元');
+                return;
+            }
+        });
+    </script>
+</body>
+</html>

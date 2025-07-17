@@ -1,0 +1,754 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ topic.title }} - NotebookLM Plus{% endblock %}
+
+{% block content %}
+<style>
+.three-column-layout {
+    display: flex;
+    height: calc(100vh - 120px);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.column {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-column {
+    flex: 0 0 300px;
+    min-width: 280px;
+}
+
+.center-column {
+    flex: 1;
+    min-width: 400px;
+}
+
+.right-column {
+    flex: 0 0 300px;
+    min-width: 280px;
+}
+
+.column-header {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: between;
+    align-items: center;
+}
+
+.column-content {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+/* 文件上傳區域 */
+.file-upload-area {
+    border: 2px dashed #d1ecf1;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-upload-area:hover {
+    border-color: #007bff;
+    background-color: #e3f2fd;
+}
+
+.file-list {
+    max-height: calc(100vh - 400px);
+    overflow-y: auto;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    background-color: #fff;
+}
+
+/* AI 聊天室 */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background-color: #f8f9fa;
+}
+
+.chat-input-area {
+    padding: 1rem;
+    border-top: 1px solid #e9ecef;
+    background-color: white;
+}
+
+.message {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 12px;
+    max-width: 80%;
+}
+
+.message.user {
+    background-color: #007bff;
+    color: white;
+    margin-left: auto;
+    text-align: right;
+}
+
+.message.ai {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+.chat-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e9ecef;
+    border-radius: 20px;
+    resize: none;
+    outline: none;
+}
+
+.chat-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+/* 筆記區域 */
+.notes-area {
+    height: 100%;
+}
+
+.note-editor {
+    width: 100%;
+    height: calc(100vh - 250px);
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    resize: none;
+    outline: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+}
+
+.note-editor:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+.note-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* 響應式設計 */
+@media (max-width: 1200px) {
+    .three-column-layout {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .left-column, .center-column, .right-column {
+        flex: none;
+        height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .left-column, .center-column, .right-column {
+        height: 300px;
+    }
+    
+    .column-content {
+        padding: 0.5rem;
+    }
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* 讓容器填滿父層空間 */
+}
+
+.chat-messages {
+    flex: 1; /* 自動填滿可用空間 */
+    overflow-y: auto; /* 垂直滾動 */
+    padding: 10px;
+    max-height: calc(100vh - 300px); /* 可依實際需求調整 */
+}
+
+.chat-input-area {
+    flex-shrink: 0; /* 防止輸入區被壓縮 */
+}
+</style>
+
+<div class="topic-header mb-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ url_for('index') }}">
+                    <i class="fas fa-home me-1"></i>首頁
+                </a>
+            </li>
+            <li class="breadcrumb-item active">{{ topic.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+            <span class="topic-emoji me-2" style="font-size: 2rem;">{{ topic.emoji }}</span>
+            <div>
+                <h1 class="mb-1" style="font-size: 1.8rem;">{{ topic.title }}</h1>
+                <p class="text-muted mb-0">建立於 {{ topic.date }}</p>
+            </div>
+        </div>
+
+        <div class="topic-actions">
+            <button class="btn btn-outline-primary btn-sm">
+                <i class="fas fa-edit me-1"></i>編輯
+            </button>
+            <button class="btn btn-outline-danger btn-sm ms-2 delete-topic" data-topic-id="{{ topic.id }}">
+                <i class="fas fa-trash me-1"></i>刪除
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="three-column-layout">
+    <!-- 左欄：文件上傳 -->
+    <div class="column left-column">
+        <div class="column-header">
+            <span><i class="fas fa-file-upload me-2"></i>文件上傳</span>
+            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addContentModal">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+        <div class="column-content">
+            <div class="file-upload-area" data-bs-toggle="modal" data-bs-target="#addContentModal">
+                <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
+                <p class="mb-0">點擊上傳文件</p>
+                <small class="text-muted">支援多種格式</small>
+            </div>
+            
+            <div class="file-list">
+                {% if files %}
+                    {% for file in files %}
+                    <div class="file-item" data-file-id="{{ file.id }}">
+                        <div class="file-info">
+                            <div class="file-name">
+                                <i class="fas fa-file me-2"></i>
+                                <span>{{ file.original_name }}</span>
+                            </div>
+                            <small class="text-muted">
+                                {{ "%.1f"|format(file.file_size / 1024) }} KB
+                            </small>
+                        </div>
+                        <div class="file-actions">
+                            <!--<a href="{{ url_for('download_file', file_id=file.id) }}" 
+                               class="btn btn-sm btn-outline-primary me-1">
+                                <i class="fas fa-download"></i>
+                            </a>-->
+                            <input type="checkbox" class="file-checkbox" data-file-id="{{ file.id }}" />
+                            <button class="btn btn-sm btn-outline-danger delete-file" 
+                                    data-file-id="{{ file.id }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center text-muted">
+                        <i class="fas fa-folder-open fa-2x mb-2"></i>
+                        <p>尚未上傳任何文件</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- 中欄：AI 聊天室 -->
+    <div class="column center-column">
+        <div class="column-header">
+            <span><i class="fas fa-robot me-2"></i>AI 助手</span>
+            <button class="btn btn-sm btn-outline-secondary" onclick="clearChat()">
+                <i class="fas fa-broom"></i>
+            </button>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">
+                    <div class="mb-1"><strong>AI 助手</strong></div>
+                    <div>您好！我是您的 AI 助手。我可以幫您分析上傳的文件內容，回答問題，或協助您整理筆記。有什麼我可以幫助您的嗎？</div>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <div class="d-flex gap-2">
+                    <textarea class="chat-input" 
+                              id="chatInput" 
+                              placeholder="輸入您的問題..." 
+                              rows="1"
+                              onkeypress="handleChatKeyPress(event)"></textarea>
+                    <button class="btn btn-primary" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- 右欄：筆記 -->
+<div class="column right-column">
+    <div class="column-header">
+        <span><i class="fas fa-sticky-note me-2"></i>筆記</span>
+        <!-- 新增按鈕，打開 Modal -->
+        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addNoteModal">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <div class="column-content">
+        <!-- 已儲存的筆記列表 -->
+        <div class="saved-notes mt-4">
+            <h6>已儲存的筆記</h6>
+            <div id="notesList" style="max-height: 80vh; overflow-y: auto;"></div>
+        </div>
+    </div>
+</div>
+
+    <!-- 新增筆記 Modal -->
+    <div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="addNoteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNoteModalLabel">新增筆記</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="noteTitle" class="form-label">標題</label>
+                        <input type="text" class="form-control" id="noteTitle" placeholder="請輸入標題">
+                    </div>
+                    <div class="mb-3">
+                        <label for="noteContent" class="form-label">筆記內容</label>
+                        <textarea class="form-control" id="noteContent" rows="5" placeholder="在此輸入筆記內容..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-success" onclick="saveNote()">儲存筆記</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 上傳文件模態框 -->
+<div class="modal fade" id="addContentModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">新增檔案</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="/add_file/{{ topic.id }}" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">選擇檔案</label>
+                        <input type="file" class="form-control" id="file" name="file" required>
+                        <div class="form-text">支援格式：txt, pdf, md, doc, docx, xls, xlsx, ppt, pptx</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">上傳檔案</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 刪除文件模態框 -->
+<div class="modal fade" id="deleteContentModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">確認刪除</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>您確定要刪除這個檔案嗎？此動作無法復原。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteContent">確認刪除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 刪除主題模態框 -->
+<div class="modal fade" id="deleteTopicModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">確認刪除</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>您確定要刪除「{{ topic.title }}」這個主題嗎？此動作無法復原。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">確認刪除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let contentToDelete = null;
+
+    // 文件刪除功能
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.delete-file')) {
+            const btn = e.target.closest('.delete-file');
+            contentToDelete = btn.getAttribute('data-file-id');
+            
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteContentModal'));
+            deleteModal.show();
+        }
+    });
+    
+    document.getElementById('confirmDeleteContent').addEventListener('click', function() {
+        const topicId = getTopicIdFromUrl();
+        if (contentToDelete) {
+            fetch(`/delete_file/${contentToDelete}?topic_id=${topicId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('deleteContentModal'));
+                    modal.hide();
+                    location.reload();
+                } else {
+                    alert('刪除失敗: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Delete error:', error);
+                alert('刪除失敗，請稍後再試');
+            });
+        }
+    });
+    
+    // 主題刪除功能
+    document.querySelector('.delete-topic').addEventListener('click', function() {
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteTopicModal'));
+        deleteModal.show();
+    });
+
+    document.getElementById('confirmDelete').addEventListener('click', function() {
+        const topicId = document.querySelector('.delete-topic').getAttribute('data-topic-id');
+
+        fetch(`/delete_topic/${topicId}`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = '/';
+            } else {
+                alert('刪除失敗: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Delete error:', error);
+            alert('刪除失敗，請稍後再試');
+        });
+    });
+});
+
+// AI 聊天功能
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+
+    if (!message) return;
+    
+    // 添加用戶消息
+    addMessage(message, 'user');
+    input.value = '';
+
+    AskQuestion(message)
+    // 模擬 AI 回應（這裡可以接入真實的 AI API）
+    /*
+    setTimeout(() => {
+        const aiResponse = generateAIResponse(message);
+        addMessage(aiResponse, 'ai');
+    }, 1000);
+    */
+}
+
+function addMessage(text, sender) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}`;
+    
+    if (sender === 'ai') {
+        messageDiv.innerHTML = `
+            <div class="mb-1 d-flex justify-content-between">
+                <strong>AI 助手</strong>
+                <button class="btn btn-sm btn-outline-secondary add-note-btn" title="新增筆記">
+                    <i class="fas fa-sticky-note"></i>
+                </button>
+            </div>
+            <div class="message-content">${text}</div>
+        `;
+    } else {
+        messageDiv.innerHTML = `
+            <div class="mb-1"><strong>您</strong></div>
+            <div>${text}</div>
+        `;
+    }
+    
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // 綁定按鈕事件
+    if (sender === 'ai') {
+        const noteBtn = messageDiv.querySelector('.add-note-btn');
+        noteBtn.addEventListener('click', () => {
+            //addNote(text);
+            alert(text)
+        });
+    }
+}
+
+function generateAIResponse(userMessage) {
+    // 簡單的回應邏輯，實際使用時可接入真實 AI API
+    const responses = [
+        '我理解您的問題。基於您上傳的文件，我建議...',
+        '這是一個很好的觀點。讓我幫您分析一下...',
+        '根據文件內容，我發現了幾個重要要點...',
+        '我可以幫您總結這些資訊並提供建議。'
+    ];
+    
+    return responses[Math.floor(Math.random() * responses.length)];
+}
+
+function handleChatKeyPress(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+}
+
+function clearChat() {
+    const messagesContainer = document.getElementById('chatMessages');
+    messagesContainer.innerHTML = `
+        <div class="message ai">
+            <div class="mb-1"><strong>AI 助手</strong></div>
+            <div>您好！我是您的 AI 助手。我可以幫您分析上傳的文件內容，回答問題，或協助您整理筆記。有什麼我可以幫助您的嗎？</div>
+        </div>
+    `;
+}
+
+// 筆記功能
+/*function saveNotes() {
+    const noteContent = document.getElementById('noteEditor').value;
+    
+    // 這裡可以添加保存筆記到服務器的邏輯
+    fetch(`/save_notes/{{ topic.id }}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ notes: noteContent })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // 顯示保存成功提示
+            const saveBtn = document.querySelector('.note-actions .btn-success');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fas fa-check me-1"></i>已保存';
+            saveBtn.disabled = true;
+            
+            setTimeout(() => {
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+            }, 2000);
+        }
+    })
+    .catch(error => {
+        console.error('Save error:', error);
+        alert('保存失敗，請稍後再試');
+    });
+}*/
+
+function saveNote() {
+    const titleInput = document.getElementById("noteTitle");
+    const contentInput = document.getElementById("noteContent");
+
+    const title = titleInput.value.trim();
+    const content = contentInput.value.trim();
+
+    if (!title || !content) {
+        alert("請填寫標題與內容");
+        return;
+    }
+
+    // 建立筆記物件
+    const newNote = {
+        id: Date.now(),  // 用時間戳當作 ID
+        title: title,
+        content: content,
+        created_at: new Date().toLocaleString('zh-TW')
+    };
+
+    // 加到畫面
+    addNoteToUI(newNote);
+
+    // 清空表單 + 關閉 modal
+    titleInput.value = "";
+    contentInput.value = "";
+    const modal = bootstrap.Modal.getInstance(document.getElementById("addNoteModal"));
+    modal.hide();
+}
+
+function addNoteToUI(note) {
+    const notesList = document.getElementById("notesList");
+
+    const noteItem = document.createElement("div");
+    noteItem.className = "file-item";
+    noteItem.setAttribute("data-note-id", note.id);
+
+    noteItem.innerHTML = `
+        <div class="file-info">
+            <div class="file-name">
+                <i class="fas fa-sticky-note me-2 text-warning"></i>
+                <span>${note.title}</span>
+            </div>
+            <small class="text-muted">${note.created_at}</small>
+        </div>
+        <div class="file-actions">
+            <button class="btn btn-sm btn-outline-primary edit-note" title="編輯">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger delete-note" title="刪除">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `;
+
+    // 插入到最上方
+    notesList.prepend(noteItem);
+
+    // 刪除功能（可選）
+    noteItem.querySelector('.delete-note').addEventListener('click', function () {
+        if (confirm("確定要刪除此筆筆記？")) {
+            noteItem.remove();
+        }
+    });
+
+    // 編輯功能（可選）
+    noteItem.querySelector('.edit-note').addEventListener('click', function () {
+        const newContent = prompt("請輸入新的筆記內容：", note.content);
+        if (newContent !== null && newContent.trim() !== "") {
+            note.content = newContent;
+            noteItem.querySelector(".file-name span").textContent = note.title;
+            noteItem.querySelector(".text-muted").textContent = new Date().toLocaleString('zh-TW');
+        }
+    });
+}
+
+function exportNotes() {
+    const noteContent = document.getElementById('noteEditor').value;
+    const blob = new Blob([noteContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${document.title.split(' - ')[0]}_筆記.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// 自動調整文本框高度
+document.getElementById('chatInput').addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+function AskQuestion(message) {
+    const selectedFiles = [];
+    // 獲取所有選中的checkbox
+    document.querySelectorAll('.file-checkbox:checked').forEach(checkbox => {
+        selectedFiles.push(checkbox.getAttribute('data-file-id'));
+    });
+    // 發送選中的檔案ID到後端
+    const topicId = getTopicIdFromUrl();
+    // alert(message)
+    // 發送請求到後端
+    fetch(`/ask`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            fileIds: selectedFiles,
+            question: message,
+            topicId: topicId   
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            addMessage(data.ai_answer, 'ai');
+            console.log('成功處理選中的檔案！');
+        } else {
+            console.error('檔案處理失敗:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('處理檔案錯誤:', error);
+    });
+}
+
+
+function getTopicIdFromUrl() {
+    const path = window.location.pathname; // 如 "/topic/123"
+    const parts = path.split('/');         // ["", "topic", "123"]
+    return parts[2];                       // "123"
+}
+</script>
+{% endblock %}
